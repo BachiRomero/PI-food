@@ -3,10 +3,9 @@ const { DataTypes } = require("sequelize");
 const Diets = (sequelize) => {
   sequelize.define("diets", {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.UUID, // codigo alfanumerico(letras, numeros, guiones)
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: DataTypes.UUIDV4, // crea un codigo aleatorio de forma automatica
     },
     name: {
       type: DataTypes.STRING,

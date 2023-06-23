@@ -5,10 +5,9 @@ const Recipe = (sequelize) => {
   // defino el modelo
   sequelize.define("recipe", {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
+      type: DataTypes.UUID, // codigo alfanumerico(letras, numeros, guiones)
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING,
