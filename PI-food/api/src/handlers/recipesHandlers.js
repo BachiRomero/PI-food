@@ -1,45 +1,40 @@
-const { createRecipe } = require("../controllers/recipesControllers");
+const {
+  createRecipe,
+  getById,
+  getByName,
+  getAll,
+} = require("../controllers/recipesControllers");
 const axios = require("axios");
 const { API_KEY } = process.env;
 const URL = "https://api.spoonacular.com/recipes";
 
-const getById = async (req, res) => {
-  const { idRecipe } = req.params;
-  await axios
-    .get(`${URL}/${idRecipe}/information?apiKey=${API_KEY}`)
-    .then(function (response) {
-      const result = response.data;
-      res.status(200).json({
-        title: result.title,
-        vegetarian: result.vegetarian,
-        vegan: result.vegan,
-        glutenFree: result.glutenFree,
-        diets: result.diets,
-      });
-    })
-    .catch(function () {
-      res.status(200).send("No existe ese id");
-    });
+const searchById = async (req, res) => {
+  try {
+    const { idRecipe } = req.params;
+    const source = isNaN(idRecipe) ? "db" : "api";
+    const response = await getById(idRecipe, source);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-const getByName = async (req, res) => {
-  const { name } = req.query;
-  await axios
-    .get(
-      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}RecipeInformation=true`
-    )
-    .then((response) => {
-      const result = response.data.results.filter((recipe) =>
-        recipe.title.includes(name)
-      );
+const searchByName = async (req, res) => {
+  try {
+    const { name } = req.query;
+    if (name) {
+      const result = await getByName(name);
       res.status(200).json(result);
-    })
-    .catch(function (error) {
-      res.status(404).json({ error: error.message });
-    });
+    } else {
+      const result = await getAll(name);
+      res.status(200).json(result);
+    }
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 };
 
-const handlerRecipe = async (req, res) => {
+const createRecipes = async (req, res) => {
   try {
     const { name, image, summary, healthScore, analyzedInstructions } =
       req.body;
@@ -57,7 +52,7 @@ const handlerRecipe = async (req, res) => {
 };
 
 module.exports = {
-  getById,
-  getByName,
-  handlerRecipe,
+  createRecipes,
+  searchById,
+  searchByName,
 };

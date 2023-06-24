@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const {
-  getById,
-  getByName,
-  handlerRecipe,
-} = require("../handlers/recipesHandlers");
 const { dietHandler } = require("../handlers/dietsHandlers");
+const {
+  searchById,
+  searchByName,
+  createRecipes,
+} = require("../handlers/recipeshandlers");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,7 +17,7 @@ const router = Router();
 // Tiene que incluir los datos de los tipos de dietas asociados a la receta.
 // Debe funcionar tanto para las recetas de la API como para las de la base de datos. <---- Falta el llamado al db
 
-router.get("/recipes/:idRecipe", getById);
+router.get("/recipes/:idRecipe", searchById);
 
 //-------------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ router.get("/recipes/:idRecipe", getById);
 // Si no existe la receta, debe mostrar un mensaje adecuado.
 // Debe buscar tanto las de la API como las de la base de datos.
 
-router.get("/recipes/", getByName);
+router.get("/recipes/", searchByName);
 
 //-------------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ router.get("/recipes/", getByName);
 // Toda la información debe ser recibida por body.
 // Debe crear la receta en la base de datos, y esta debe estar relacionada con los tipos de dieta indicados (al menos uno).
 
-router.post("/recipes", handlerRecipe);
+router.post("/recipes", createRecipes);
 
 //-------------------------------------------------------------------------------------------------------------------------
 
