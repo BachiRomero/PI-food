@@ -4,9 +4,6 @@ const {
   getByName,
   getAll,
 } = require("../controllers/recipesControllers");
-const axios = require("axios");
-const { API_KEY } = process.env;
-const URL = "https://api.spoonacular.com/recipes";
 
 const searchById = async (req, res) => {
   try {

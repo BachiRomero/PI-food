@@ -1,3 +1,4 @@
+const { Diets } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
 const URL = "https://api.spoonacular.com/recipes";
@@ -5,7 +6,7 @@ const URL = "https://api.spoonacular.com/recipes";
 const dietHandler = async (req, res) => {
   await axios
     .get(
-      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}RecipeInformation=true`
+      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}`
     )
     .then(async (response) => {
       const arr = [];

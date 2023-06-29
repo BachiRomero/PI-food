@@ -1,0 +1,17 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
+  border: 1px solid ghostwhite;
+  border-radius: 5px;
+
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.img {
+  display: flex;
+  padding: 10px;
+  width: 70%;
+  margin-left: 25px;
+}

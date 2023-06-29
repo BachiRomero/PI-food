@@ -1,7 +1,7 @@
 const { Recipe } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const URL = "http://localhost:8080/recipes";
+const URL = "https://api.spoonacular.com//recipes";
 
 //----------------------------------------------------------------------------------------------------------------------//
 
@@ -33,7 +33,7 @@ const getByName = async (name) => {
   });
   const nameByApi = await axios
     .get(
-      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}RecipeInformation=true`
+      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}`
     )
     .then((response) => {
       const data = response.data.results.filter((recipe) =>
@@ -41,11 +41,13 @@ const getByName = async (name) => {
       );
       const result = data.map((recipe) => {
         const recipeFiltered = {
+          id: recipe.id,
           title: recipe.title,
           vegetarian: recipe.vegetarian,
           vegan: recipe.vegan,
           glutenFree: recipe.glutenFree,
           diets: recipe.diets,
+          image: recipe.image,
           created: false,
         };
         return recipeFiltered;
@@ -59,17 +61,19 @@ const getAll = async () => {
   const nameByDb = await Recipe.findAll();
   const nameByApi = await axios
     .get(
-      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}RecipeInformation=true`
+      `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}&addRecipeInformation=true`
     )
     .then((response) => {
       const data = response.data.results;
       const result = data.map((recipe) => {
         const recipeFiltered = {
+          id: recipe.id,
           title: recipe.title,
           vegetarian: recipe.vegetarian,
           vegan: recipe.vegan,
           glutenFree: recipe.glutenFree,
           diets: recipe.diets,
+          image: recipe.image,
           created: false,
         };
         return recipeFiltered;

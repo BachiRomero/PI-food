@@ -1,4 +1,7 @@
 const { Router } = require("express");
+
+// Importar todos los routers;
+// Ejemplo: const authRouter = require('./auth.js');
 const { dietHandler } = require("../handlers/dietsHandlers");
 const {
   searchById,
@@ -6,10 +9,10 @@ const {
   createRecipes,
 } = require("../handlers/recipeshandlers");
 
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-
 const router = Router();
+
+// Configurar los routers
+// Ejemplo: router.use('/auth', authRouter); <--- cuando quiero una ruta /auth envialo al archivo authRouter donde deberia estar la ruta
 
 // 📍 GET | /recipes/:idRecipe
 // Esta ruta obtiene el detalle de una receta específica. Es decir que devuelve un objeto con la información pedida en el detalle de una receta.
@@ -46,8 +49,5 @@ router.post("/recipes", createRecipes);
 // Estas deben ser obtenidas de la API (se evaluará que no haya hardcodeo). Luego de obtenerlas de la API, deben ser guardadas en la base de datos para su posterior consumo desde allí.
 
 router.get("/diets", dietHandler);
-
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter); <--- cuando quiero una ruta /auth envialo al archivo authRouter donde deberia estar la ruta
 
 module.exports = router;
