@@ -1,7 +1,7 @@
 const { Recipe } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const URL = "https://api.spoonacular.com//recipes";
+const URL = "http://localhost:8080//recipes";
 
 //----------------------------------------------------------------------------------------------------------------------//
 
@@ -29,7 +29,7 @@ const getById = async (idRecipe, source) => {
 
 const getByName = async (name) => {
   const nameByDb = await Recipe.findAll({
-    where: { name: name },
+    where: { title: name },
   });
   const nameByApi = await axios
     .get(
@@ -86,18 +86,20 @@ const getAll = async () => {
 //----------------------------------------------------------------------------------------------------------------------//
 
 const createRecipe = async (
-  name,
+  title,
   image,
   summary,
   healthScore,
-  analyzedInstructions
+  analyzedInstructions,
+  diet
 ) => {
   const newRecipe = await Recipe.create({
-    name,
+    title,
     image,
     summary,
     healthScore,
     analyzedInstructions,
+    diet,
   });
 
   return newRecipe;

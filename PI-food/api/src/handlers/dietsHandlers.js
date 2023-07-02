@@ -1,7 +1,7 @@
-const { Diets } = require("../db");
+const { Diet } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const URL = "https://api.spoonacular.com/recipes";
+const URL = "http://localhost:8080/recipes";
 
 const dietHandler = async (req, res) => {
   await axios
@@ -27,7 +27,7 @@ const dietHandler = async (req, res) => {
       console.log(arr2);
 
       arr2.map(async (element) => {
-        const newDiet = await Diets.create({ name: element });
+        const newDiet = await Diet.create({ name: element });
         console.log(newDiet);
       });
 

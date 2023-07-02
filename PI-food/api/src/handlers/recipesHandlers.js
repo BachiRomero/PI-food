@@ -33,14 +33,15 @@ const searchByName = async (req, res) => {
 
 const createRecipes = async (req, res) => {
   try {
-    const { name, image, summary, healthScore, analyzedInstructions } =
+    const { title, image, summary, healthScore, analyzedInstructions, diet } =
       req.body;
     const response = await createRecipe(
-      name,
+      title,
       image,
       summary,
       healthScore,
-      analyzedInstructions
+      analyzedInstructions,
+      diet
     );
     res.status(200).json(response);
   } catch (error) {
