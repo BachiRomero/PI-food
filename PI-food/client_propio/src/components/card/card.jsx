@@ -10,7 +10,7 @@ export default function Card({ recipe }) {
         <h2>{title}</h2>
       </Link>
       <img src={image} alt="" className="img" />
-      <h4>Diets: {diets.toString().split(",").join(" - ")}</h4>
+      <h4>Diets: {diets}</h4>
     </div>
   );
 }

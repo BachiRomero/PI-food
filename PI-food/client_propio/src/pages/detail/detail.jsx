@@ -10,15 +10,13 @@ const Detail = () => {
   const [recipe, setRecipe] = useState({});
 
   useEffect(async () => {
-    await axios(`https://api.spoonacular.com//recipes/${id}`).then(
-      ({ data }) => {
-        if (data) {
-          setRecipe(data);
-        } else {
-          window.alert("No hay personajes con ese ID");
-        }
+    await axios(`http://localhost:3001/recipes/${id}`).then(({ data }) => {
+      if (data) {
+        setRecipe(data);
+      } else {
+        window.alert("No hay recetas con ese ID");
       }
-    );
+    });
     //return setRecipe({});
   }, [id]);
 
@@ -34,7 +32,3 @@ const Detail = () => {
 };
 
 export default Detail;
-
-//  "vegetarian": true,
-//   "vegan": true,
-//   "glutenFree": true,
