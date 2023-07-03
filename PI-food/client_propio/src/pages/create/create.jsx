@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import "./create.modules.css";
 import { postRecipe } from "../../redux/actions";
+import { Link } from "react-router-dom";
 
 function Create() {
   const dispatch = useDispatch();
@@ -85,6 +86,9 @@ function Create() {
             onChange={handleChange}
           />
           <button type="submit">Create</button>
+          <Link to="/home">
+            <button>HOME</button>
+          </Link>
         </div>
       </form>
     </div>

@@ -1,7 +1,8 @@
 const { Recipe } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const URL = "http://localhost:8080//recipes";
+const URL = "https://api.spoonacular.com/recipes";
+//const URL = "http://localhost:8080/recipes";
 
 //----------------------------------------------------------------------------------------------------------------------//
 
@@ -10,14 +11,19 @@ const getById = async (idRecipe, source) => {
     source === "api"
       ? await axios
           .get(`${URL}/${idRecipe}/information?apiKey=${API_KEY}`)
-          .then(function (response) {
+          .then((response) => {
             const data = response.data;
+            const diets = data.diets.join(" - ");
+            const summary = data.summary.replace(/<[^>]+>/g, "");
+            const instructions = data.instructions.replace(/<[^>]+>/g, "");
             const result = {
+              id: data.id,
               title: data.title,
-              vegetarian: data.vegetarian,
-              vegan: data.vegan,
-              glutenFree: data.glutenFree,
-              diets: data.diets,
+              image: data.image,
+              summary: summary,
+              healthScore: data.healthScore,
+              step_by_step: instructions,
+              diets: diets,
             };
             return result;
           })
@@ -40,13 +46,16 @@ const getByName = async (name) => {
         recipe.title.toLowerCase().includes(name.toLowerCase())
       );
       const result = data.map((recipe) => {
+        const diets = recipe.diets.join(" - ");
+
         const recipeFiltered = {
           id: recipe.id,
           title: recipe.title,
           vegetarian: recipe.vegetarian,
           vegan: recipe.vegan,
           glutenFree: recipe.glutenFree,
-          diets: recipe.diets,
+          healthScore: recipe.healthScore,
+          diets: diets,
           image: recipe.image,
           created: false,
         };
@@ -66,13 +75,15 @@ const getAll = async () => {
     .then((response) => {
       const data = response.data.results;
       const result = data.map((recipe) => {
+        const diets = recipe.diets.join(" - ");
         const recipeFiltered = {
           id: recipe.id,
           title: recipe.title,
           vegetarian: recipe.vegetarian,
           vegan: recipe.vegan,
           glutenFree: recipe.glutenFree,
-          diets: recipe.diets,
+          healthScore: recipe.healthScore,
+          diets: diets,
           image: recipe.image,
           created: false,
         };

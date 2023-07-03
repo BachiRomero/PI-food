@@ -7,7 +7,7 @@ export default function Cards({ allRecipes }) {
     <div className="card-list">
       {/* Mapeamos el estado global y por cada recipe creamos una card. */}
       {recipeList?.map((recipe) => (
-        <Card recipe={recipe} /> // Pasamos la recipe como prop al componente card.
+        <Card recipe={recipe} key={recipe.id} /> // Pasamos la recipe como prop al componente card.
       ))}
     </div>
   );

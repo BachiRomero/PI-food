@@ -11,10 +11,12 @@ const Recipe = (sequelize) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
+
       title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+
       image: {
         type: DataTypes.STRING(255),
         // allowNull: false,
@@ -22,24 +24,28 @@ const Recipe = (sequelize) => {
           isUrl: true,
         },
       },
+
       summary: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+
       healthScore: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      // analyzedInstructions: {
-      //   type: DataTypes.ARRAY(DataTypes.JSONB),
-      //   allowNull: false,
-      // },
+
+      step_by_step: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
 
       created: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
     },
+
     { timestamps: false }
   );
 };

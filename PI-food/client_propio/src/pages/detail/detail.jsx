@@ -3,6 +3,7 @@ import "./detail.modules.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Detail = () => {
   const { id } = useParams();
@@ -22,11 +23,18 @@ const Detail = () => {
 
   return (
     <div>
-      <h1>{recipe.title}</h1>
-      <h2>{recipe.diets}</h2>
-      <h2>{recipe.vegetarian}</h2>
-      <h2>{recipe.vegan}</h2>
-      <h2>{recipe.glutenFree}</h2>
+      <>
+        <Link to="/home">
+          <button>HOME</button>
+        </Link>
+      </>
+      <>
+        <h1>{recipe.title}</h1>
+        <h2>{recipe.summary}</h2>
+        <img src={recipe.image} alt="" />
+        <h2>{recipe.step_by_step}</h2>
+        <h2>{recipe.diets}</h2>
+      </>
     </div>
   );
 };

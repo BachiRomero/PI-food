@@ -1,4 +1,5 @@
 import {
+  DETAIL,
   FILTER,
   GET_BY_NAME,
   GET_RECIPES,
@@ -26,21 +27,37 @@ function rootReducer(state = initialState, { type, payload }) {
         recipesP: [...payload].splice(0, ITEMS_PER_PAGE),
       };
 
+    //-------------------------------------------------------------------------------------------------------------
+
     case GET_BY_NAME:
       return {
         ...state,
         allRecipes: payload,
+        recipesP: [...payload].splice(0, ITEMS_PER_PAGE),
       };
 
+    //-------------------------------------------------------------------------------------------------------------
+
     case FILTER:
-      const allRecipesFiltered = state.allRecipes.filter((recipe) =>
-        recipe.diets.includes(payload)
-      );
-      return {
-        ...state,
-        filter: true,
-        recipesFiltered: allRecipesFiltered,
-      };
+      if (payload !== "all") {
+        const allRecipesFiltered = state.allRecipes.filter((recipe) =>
+          recipe.diets.includes(payload)
+        );
+        return {
+          ...state,
+          filter: true,
+          //recipesP: [...payload].splice(0, ITEMS_PER_PAGE),
+          recipesFiltered: allRecipesFiltered,
+        };
+      } else {
+        return {
+          ...state,
+          filter: false,
+          recipesP: [...state.allRecipes].splice(0, ITEMS_PER_PAGE),
+        };
+      }
+
+    //-------------------------------------------------------------------------------------------------------------
 
     case PAGINATE:
       const next_page = state.currentPage + 1;
@@ -73,6 +90,8 @@ function rootReducer(state = initialState, { type, payload }) {
         currentPage: payload === "next" ? next_page : prev_page,
       };
 
+    //-------------------------------------------------------------------------------------------------------------
+
     case ORDER_H:
       const allRecipesCopy = [...state.allRecipes];
       const allRecipesOrder =
@@ -81,19 +100,24 @@ function rootReducer(state = initialState, { type, payload }) {
           : allRecipesCopy.sort((a, b) => b.healthScore - a.healthScore);
       return {
         ...state,
-        allRecipes: allRecipesOrder,
+        recipesP: allRecipesOrder,
       };
+
+    //-------------------------------------------------------------------------------------------------------------
 
     case ORDER_T:
       const allRecipesCopyT = [...state.allRecipes];
+      console.log(allRecipesCopyT);
       const allRecipesOrderT =
         payload === "C"
-          ? allRecipesCopyT.sort((a, b) => (a.title < b.title ? -1 : null))
-          : allRecipesCopyT.sort((a, b) => (b.title < a.title ? -1 : null));
+          ? allRecipesCopyT.sort((a, b) => a.title.localeCompare(b.title))
+          : allRecipesCopyT.sort((a, b) => b.title.localeCompare(a.title));
       return {
         ...state,
-        allRecipes: allRecipesOrderT,
+        recipesP: allRecipesOrderT,
       };
+
+    //-------------------------------------------------------------------------------------------------------------
 
     default:
       return { ...state };

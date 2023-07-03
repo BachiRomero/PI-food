@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  detail,
   filterRecipe,
   getByName,
   getRecipes,
@@ -8,6 +9,7 @@ import {
   orderRecipeByTitle,
   paginate,
 } from "../../redux/actions/index";
+import { Link } from "react-router-dom";
 
 import SearchBar from "../../components/searchBar/searchBar";
 import Cards from "../../components/cards/cards";
@@ -84,13 +86,14 @@ function Home() {
 
   useEffect(() => {
     dispatch(getRecipes()); // Monta la action getRecipes al renderizar la pagina por primera vez.
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="home">
       <h1 className="home-title">Estás en la home</h1>
-      <button onClick={() => prevPage()}>Prev</button>
-      <button onClick={() => nexPage()}>Next</button>
+      <Link to="/create">
+        <button className="button-create">CREATE RECIPE</button>
+      </Link>
       <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />,
       <select onChange={handlerOrderByTitle}>
         <option value="C">Orden A-Z</option>
@@ -101,6 +104,7 @@ function Home() {
         <option value="D">Descendente</option>
       </select>
       <select onChange={handlerFilter}>
+        <option value="all">All</option>
         <option value="gluten free">Gluten free</option>
         <option value="dairy free">Diary free</option>
         <option value="lacto ovo vegetarian">Lacto ovo vegetarian</option>
@@ -113,6 +117,8 @@ function Home() {
         <option value="fodmap friendly">Foodmap fiendly</option>
       </select>
       <Cards allRecipes={filter ? recipesFiltered : recipesP} />
+      <button onClick={() => prevPage()}>Prev</button>
+      <button onClick={() => nexPage()}>Next</button>
     </div>
   );
 }

@@ -9,9 +9,15 @@ const Diet = (sequelize) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4, // crea un codigo aleatorio de forma automatica
       },
+
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+
+      created: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
     },
     { timestamps: false }

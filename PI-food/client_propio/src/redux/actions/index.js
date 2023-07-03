@@ -7,6 +7,7 @@ export const ORDER_H = "ORDER_H";
 export const ORDER_T = "ORDER_T";
 export const POST_RECIPE = "POST_RECIPE";
 export const PAGINATE = "PAGINATE";
+export const DETAIL = "DETAIL";
 
 export function getRecipes() {
   return async function (dispatch) {

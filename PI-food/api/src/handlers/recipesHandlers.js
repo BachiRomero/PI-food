@@ -5,6 +5,8 @@ const {
   getAll,
 } = require("../controllers/recipesControllers");
 
+//---------------------------------------------------------------------------------------------------------------------
+
 const searchById = async (req, res) => {
   try {
     const { idRecipe } = req.params;
@@ -15,6 +17,8 @@ const searchById = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+//---------------------------------------------------------------------------------------------------------------------
 
 const searchByName = async (req, res) => {
   try {
@@ -30,6 +34,8 @@ const searchByName = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
+//---------------------------------------------------------------------------------------------------------------------
 
 const createRecipes = async (req, res) => {
   try {
@@ -48,6 +54,8 @@ const createRecipes = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+//---------------------------------------------------------------------------------------------------------------------
 
 module.exports = {
   createRecipes,
