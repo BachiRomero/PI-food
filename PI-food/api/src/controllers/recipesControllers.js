@@ -1,8 +1,8 @@
 const { Recipe } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const URL = "https://api.spoonacular.com/recipes";
-//const URL = "http://localhost:8080/recipes";
+// const URL = "https://api.spoonacular.com/recipes";
+const URL = "http://localhost:8080/recipes";
 
 //----------------------------------------------------------------------------------------------------------------------//
 

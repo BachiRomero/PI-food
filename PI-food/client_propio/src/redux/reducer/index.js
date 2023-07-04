@@ -1,5 +1,4 @@
 import {
-  DETAIL,
   FILTER,
   GET_BY_NAME,
   GET_RECIPES,
@@ -33,21 +32,20 @@ function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         allRecipes: payload,
-        recipesP: [...payload].splice(0, ITEMS_PER_PAGE),
+        recipesP: [...payload],
       };
 
     //-------------------------------------------------------------------------------------------------------------
 
     case FILTER:
       if (payload !== "all") {
-        const allRecipesFiltered = state.allRecipes.filter((recipe) =>
-          recipe.diets.includes(payload)
-        );
         return {
           ...state,
           filter: true,
-          //recipesP: [...payload].splice(0, ITEMS_PER_PAGE),
-          recipesFiltered: allRecipesFiltered,
+
+          recipesFiltered: [...state.allRecipes].filter((recipe) =>
+            recipe.diets.includes(payload)
+          ),
         };
       } else {
         return {
