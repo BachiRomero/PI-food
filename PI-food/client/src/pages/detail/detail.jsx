@@ -10,8 +10,8 @@ const Detail = () => {
 
   const [recipe, setRecipe] = useState({});
 
-  useEffect(async () => {
-    await axios(`http://localhost:3001/recipes/${id}`).then(({ data }) => {
+  useEffect(() => {
+    axios(`http://localhost:3001/recipes/${id}`).then(({ data }) => {
       if (data) {
         setRecipe(data);
       } else {
@@ -23,18 +23,20 @@ const Detail = () => {
 
   return (
     <div>
-      <>
+      <div>
         <Link to="/home">
-          <button>HOME</button>
+          <button className="button-back">HOME</button>
         </Link>
-      </>
-      <>
+      </div>
+      <div className="text">
         <h1>{recipe.title}</h1>
-        <h2>{recipe.summary}</h2>
+        <h2>Summary</h2>
+        <h2 className="summary">{recipe.summary}</h2>
         <img src={recipe.image} alt="" />
-        <h2>{recipe.step_by_step}</h2>
+        <h2>Steps to preparation</h2>
+        <h2 className="step">{recipe.step_by_step}</h2>
         <h2>{recipe.diets}</h2>
-      </>
+      </div>
     </div>
   );
 };

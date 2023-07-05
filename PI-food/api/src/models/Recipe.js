@@ -18,7 +18,7 @@ const Recipe = (sequelize) => {
       },
 
       image: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(300),
         allowNull: false,
         validate: {
           isUrl: true,
@@ -26,7 +26,7 @@ const Recipe = (sequelize) => {
       },
 
       summary: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
         allowNull: false,
       },
 
@@ -36,7 +36,7 @@ const Recipe = (sequelize) => {
       },
 
       step_by_step: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(2000),
         allowNull: false,
       },
 

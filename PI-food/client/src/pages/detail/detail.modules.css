@@ -1,0 +1,23 @@
+.summary {
+  padding-top: 0px;
+  padding: 30px;
+}
+
+.step {
+  padding-top: 0px;
+  padding: 30px;
+}
+
+.button-back {
+  font-size: 125%;
+  line-height: 1.5;
+  padding: 0.3em 0.8em;
+  color: white;
+  border: 1px solid#446d88;
+  border-radius: 0.2em;
+  background: #58a linear-gradient(#77a0bb, #58a);
+  box-shadow: 0 0.05em 0.25em gray;
+  text-shadow: 0 -0.05em 0.05em #335166;
+  margin: 2em;
+  cursor: pointer;
+}

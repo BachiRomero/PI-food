@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./create.modules.css";
 import { postRecipe } from "../../redux/actions";
 import { Link } from "react-router-dom";
+import validation from "./validation";
+import "./create.modules.css";
 
 function Create() {
   const dispatch = useDispatch();
@@ -19,19 +21,23 @@ function Create() {
   const [error, setError] = useState({
     title: "",
     summary: "",
-    healthScore: 0,
+    healthScore: "",
     step_by_step: "",
     image: "",
     dieta: [],
   });
-
-  function validate(input) {}
 
   function handleChange(event) {
     setInput({
       ...input, // Para que no se pisen los inputs al setear!!
       [event.target.name]: event.target.value,
     });
+    setError(
+      validation({
+        ...input,
+        [event.target.name]: event.target.value,
+      })
+    );
   }
 
   function handleSubmit(event) {
@@ -43,11 +49,14 @@ function Create() {
     const selectedOptions = Array.from(event.target.selectedOptions).map(
       (option) => option.value
     );
-    setInput((prevInput) => ({ ...prevInput, diets: selectedOptions }));
+    setInput((input) => ({ ...input, diets: selectedOptions }));
   }
 
   return (
     <div className="div-container">
+      <Link to="/home">
+        <button className="button-back">HOME</button>
+      </Link>
       <form action="" onSubmit={handleSubmit} className="form">
         <div className="div-form">
           <label htmlFor="">Name: </label>
@@ -57,35 +66,37 @@ function Create() {
             value={input.value}
             onChange={handleChange}
           />
-          <label htmlFor="">Summary: </label>
-          <input
+          <p className="errors">{error.title}</p>
+          <label className="inputs" htmlFor="">
+            Summary:{" "}
+          </label>
+          <textarea
             type="text"
             name="summary"
             value={input.value}
             onChange={handleChange}
           />
-          <label htmlFor="">Healt Score: </label>
-          <input
-            type="number"
-            name="healthScore"
-            value={input.value}
-            onChange={handleChange}
-          />
-          <label htmlFor="">Steps for creation: </label>
-          <input
+          <label className="inputs" htmlFor="">
+            Steps for creation:{" "}
+          </label>
+          <textarea
             type="text"
             name="step_by_step"
             value={input.value}
             onChange={handleChange}
           />
-          <label htmlFor="">Image: </label>
+          <label className="inputs" htmlFor="">
+            Image:{" "}
+          </label>
           <input
             type="text"
             name="image"
             value={input.value}
             onChange={handleChange}
           />
-          <label htmlFor="">Diets: </label>
+          <label className="inputs" htmlFor="">
+            Diets:{" "}
+          </label>
           <select multiple id="mySelect" onChange={handleSelectChange}>
             <option value="gluten free">Gluten free</option>
             <option value="dairy free">Diary free</option>
@@ -98,10 +109,19 @@ function Create() {
             <option value="ketogenic">Ketogenic</option>
             <option value="foodmap fiendly">Foodmap fiendly</option>
           </select>
-          <button type="submit">Create</button>
-          <Link to="/home">
-            <button>HOME</button>
-          </Link>
+          <label className="inputs" htmlFor="">
+            Healt Score:{" "}
+          </label>
+          <input
+            type="number"
+            name="healthScore"
+            value={input.value}
+            onChange={handleChange}
+          />
+          <p className="errors">{error.healthScore}</p>
+          <button type="submit" className="button-create">
+            Create
+          </button>
         </div>
       </form>
     </div>

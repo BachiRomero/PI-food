@@ -17,8 +17,8 @@ import "./home.modules.css";
 
 function Home() {
   const dispatch = useDispatch(); // Dispatch es la forma en que se envía las actions al store. Para poder usarlo debemos invocar useDispatch primero
-  const allRecipes = useSelector((state) => state.allRecipes); // useSelector es la suscripción al estado allRecipes..
-  const recipesFiltered = useSelector((state) => state.recipesFiltered); // useSelector es la suscripción al estado recipesFiltered..
+  // const recipesOrderer = useSelector((state) => state.recipesOrderer); // useSelector es la suscripción al estado recipesOrderer..
+  // const order = useSelector((state) => state.order); // useSelector es la suscripción al estado order..
   const recipesFilteredCopy = useSelector((state) => state.recipesFilteredCopy); // useSelector es la suscripción al estado recipesFilteredCopy..
   const filter = useSelector((state) => state.filter); // useSelector es la suscripción al estado filter..
   const recipesP = useSelector((state) => state.recipesP); // useSelector es la suscripción al estado recipesP..
@@ -143,7 +143,7 @@ function Home() {
 
   return (
     <div className="home">
-      <h1 className="home-title">Estás en la home</h1>
+      <h1 className="home-title">PI food</h1>
       <Link to="/create">
         <button className="button-create button-create1">CREATE RECIPE</button>
       </Link>
@@ -169,7 +169,10 @@ function Home() {
         <option value="ketogenic">Ketogenic</option>
         <option value="fodmap friendly">Foodmap fiendly</option>
       </select>
-      <Cards allRecipes={filter ? recipesFilteredCopy : recipesP} />
+      <Cards
+        // order={order ? recipesOrderer : recipesP}
+        allRecipes={filter ? recipesFilteredCopy : recipesP}
+      />
       <button className="button-page" onClick={() => prevPage()}>
         <img
           className="flecha"

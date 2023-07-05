@@ -14,10 +14,18 @@ let initialState = {
   filter: false,
   recipesP: [],
   currentPage: 0,
+  recipesOrderer: [],
+  order: false,
 };
 
 function rootReducer(state = initialState, { type, payload }) {
   const ITEMS_PER_PAGE = 9;
+  const next_page = state.currentPage + 1;
+  const prev_page = state.currentPage - 1;
+  const firstIndex =
+    payload === "next"
+      ? next_page * ITEMS_PER_PAGE
+      : prev_page * ITEMS_PER_PAGE;
 
   switch (type) {
     case GET_RECIPES:
@@ -60,12 +68,6 @@ function rootReducer(state = initialState, { type, payload }) {
     //-------------------------------------------------------------------------------------------------------------
 
     case PAGINATE:
-      const next_page = state.currentPage + 1;
-      const prev_page = state.currentPage - 1;
-      const firstIndex =
-        payload === "next"
-          ? next_page * ITEMS_PER_PAGE
-          : prev_page * ITEMS_PER_PAGE;
       if (state.filter) {
         if (payload === "next" && firstIndex >= state.recipesFiltered.length) {
           return { ...state };
@@ -102,6 +104,7 @@ function rootReducer(state = initialState, { type, payload }) {
           : allRecipesCopy.sort((a, b) => b.healthScore - a.healthScore);
       return {
         ...state,
+        order: true,
         recipesP: allRecipesOrder,
       };
 
