@@ -19,6 +19,7 @@ function Home() {
   const dispatch = useDispatch(); // Dispatch es la forma en que se envía las actions al store. Para poder usarlo debemos invocar useDispatch primero
   const allRecipes = useSelector((state) => state.allRecipes); // useSelector es la suscripción al estado allRecipes..
   const recipesFiltered = useSelector((state) => state.recipesFiltered); // useSelector es la suscripción al estado recipesFiltered..
+  const recipesFilteredCopy = useSelector((state) => state.recipesFilteredCopy); // useSelector es la suscripción al estado recipesFilteredCopy..
   const filter = useSelector((state) => state.filter); // useSelector es la suscripción al estado filter..
   const recipesP = useSelector((state) => state.recipesP); // useSelector es la suscripción al estado recipesP..
 
@@ -168,7 +169,7 @@ function Home() {
         <option value="ketogenic">Ketogenic</option>
         <option value="fodmap friendly">Foodmap fiendly</option>
       </select>
-      <Cards allRecipes={filter ? recipesFiltered : recipesP} />
+      <Cards allRecipes={filter ? recipesFilteredCopy : recipesP} />
       <button className="button-page" onClick={() => prevPage()}>
         <img
           className="flecha"

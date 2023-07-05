@@ -11,18 +11,18 @@ function Create() {
     title: "",
     summary: "",
     healtScore: 0,
-    analyzedInstructions: {},
+    step_by_step: "",
     image: "",
-    diets: [""],
+    dieta: [],
   });
 
   const [error, setError] = useState({
     title: "",
     summary: "",
     healthScore: 0,
-    analyzedInstructions: {},
+    step_by_step: "",
     image: "",
-    diets: [""],
+    dieta: [],
   });
 
   function validate(input) {}
@@ -37,6 +37,13 @@ function Create() {
   function handleSubmit(event) {
     event.preventDefault();
     dispatch(postRecipe(input));
+  }
+
+  function handleSelectChange(event) {
+    const selectedOptions = Array.from(event.target.selectedOptions).map(
+      (option) => option.value
+    );
+    setInput((prevInput) => ({ ...prevInput, diets: selectedOptions }));
   }
 
   return (
@@ -67,7 +74,7 @@ function Create() {
           <label htmlFor="">Steps for creation: </label>
           <input
             type="text"
-            name="analyzedInstructions"
+            name="step_by_step"
             value={input.value}
             onChange={handleChange}
           />
@@ -79,12 +86,18 @@ function Create() {
             onChange={handleChange}
           />
           <label htmlFor="">Diets: </label>
-          <input
-            type="text"
-            name="diets"
-            value={input.value}
-            onChange={handleChange}
-          />
+          <select multiple id="mySelect" onChange={handleSelectChange}>
+            <option value="gluten free">Gluten free</option>
+            <option value="dairy free">Diary free</option>
+            <option value="lacto ovo vegetarian">Lacto ovo vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="paleolithic">Paleolithic</option>
+            <option value="primal">Primal</option>
+            <option value="wole 30">Wole 30</option>
+            <option value="pescatarian">Pescatarian</option>
+            <option value="ketogenic">Ketogenic</option>
+            <option value="foodmap fiendly">Foodmap fiendly</option>
+          </select>
           <button type="submit">Create</button>
           <Link to="/home">
             <button>HOME</button>

@@ -10,6 +10,7 @@ import {
 let initialState = {
   allRecipes: [],
   recipesFiltered: [],
+  recipesFilteredCopy: [],
   filter: false,
   recipesP: [],
   currentPage: 0,
@@ -39,13 +40,14 @@ function rootReducer(state = initialState, { type, payload }) {
 
     case FILTER:
       if (payload !== "all") {
+        const filtered = [...state.allRecipes].filter((recipe) =>
+          recipe.diets.includes(payload)
+        );
         return {
           ...state,
           filter: true,
-
-          recipesFiltered: [...state.allRecipes].filter((recipe) =>
-            recipe.diets.includes(payload)
-          ),
+          recipesFiltered: filtered,
+          recipesFilteredCopy: [...filtered].splice(0, ITEMS_PER_PAGE),
         };
       } else {
         return {
@@ -65,12 +67,14 @@ function rootReducer(state = initialState, { type, payload }) {
           ? next_page * ITEMS_PER_PAGE
           : prev_page * ITEMS_PER_PAGE;
       if (state.filter) {
-        if (firstIndex >= state.recipesFiltered.length) {
+        if (payload === "next" && firstIndex >= state.recipesFiltered.length) {
+          return { ...state };
+        } else if (payload === "prev" && prev_page < 0) {
           return { ...state };
         }
         return {
           ...state,
-          recipesFiltered: [...state.recipesFiltered].splice(
+          recipesFilteredCopy: [...state.recipesFiltered].splice(
             firstIndex,
             ITEMS_PER_PAGE
           ),

@@ -1,4 +1,4 @@
-const { Recipe } = require("../db");
+const { Recipe, Diet } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
 // const URL = "https://api.spoonacular.com/recipes";
@@ -36,6 +36,12 @@ const getById = async (idRecipe, source) => {
 const getByName = async (name) => {
   const nameByDb = await Recipe.findAll({
     where: { title: name },
+    include: {
+      model: Diet,
+      as: "dietAssociations",
+      attributes: ["name"],
+      through: { attributes: [] },
+    },
   });
   const nameByApi = await axios
     .get(
@@ -67,7 +73,14 @@ const getByName = async (name) => {
 };
 
 const getAll = async () => {
-  const nameByDb = await Recipe.findAll();
+  const nameByDb = await Recipe.findAll({
+    include: {
+      model: Diet,
+      as: "dietAssociations",
+      attributes: ["name"],
+      through: { attributes: [] },
+    },
+  });
   const nameByApi = await axios
     .get(
       `${URL}/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}&addRecipeInformation=true`
@@ -101,17 +114,22 @@ const createRecipe = async (
   image,
   summary,
   healthScore,
-  analyzedInstructions,
-  diet
+  step_by_step,
+  diets
 ) => {
   const newRecipe = await Recipe.create({
     title,
     image,
     summary,
     healthScore,
-    analyzedInstructions,
-    diet,
+    step_by_step,
+    diets,
   });
+
+  for (const diet of diets) {
+    const newModel = await Diet.findOne({ where: { name: diet } });
+    await newRecipe.addDietAssociations(newModel);
+  }
 
   return newRecipe;
 };

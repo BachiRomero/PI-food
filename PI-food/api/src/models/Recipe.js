@@ -19,7 +19,7 @@ const Recipe = (sequelize) => {
 
       image: {
         type: DataTypes.STRING(255),
-        // allowNull: false,
+        allowNull: false,
         validate: {
           isUrl: true,
         },
@@ -44,6 +44,10 @@ const Recipe = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      // diets: {
+      //   type: DataTypes.ARRAY(DataTypes.STRING),
+      //   allowNull: false,
+      // },
     },
 
     { timestamps: false }
