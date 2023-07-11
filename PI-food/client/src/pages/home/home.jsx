@@ -173,7 +173,23 @@ function Home() {
         // order={order ? recipesOrderer : recipesP}
         allRecipes={filter ? recipesFilteredCopy : recipesP}
       />
-      <button className="button-page" onClick={() => prevPage()}>
+      <div
+        class="btn-group"
+        role="group"
+        aria-label="Basic mixed styles example"
+      >
+        <button type="button" class="btn btn-danger" onClick={() => prevPage()}>
+          Left
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          onClick={() => nextPage()}
+        >
+          Right
+        </button>
+      </div>
+      {/* <button className="button-page" onClick={() => prevPage()}>
         <img
           className="flecha"
           src="https://images.emojiterra.com/google/noto-emoji/unicode-15/color/128px/2b05.png"
@@ -186,7 +202,7 @@ function Home() {
           src="https://images.emojiterra.com/google/noto-emoji/unicode-15/color/128px/27a1.png"
           alt="Next"
         />
-      </button>
+      </button> */}
     </div>
   );
 }

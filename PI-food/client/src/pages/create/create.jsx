@@ -55,7 +55,7 @@ function Create() {
   return (
     <div className="div-container">
       <Link to="/home">
-        <button className="button-back">HOME</button>
+        <button class="btn btn-primary">HOME</button>
       </Link>
       <form action="" onSubmit={handleSubmit} className="form">
         <div className="div-form">
@@ -119,7 +119,7 @@ function Create() {
             onChange={handleChange}
           />
           <p className="errors">{error.healthScore}</p>
-          <button type="submit" className="button-create">
+          <button type="submit" class="btn btn-outline-dark">
             Create
           </button>
         </div>
